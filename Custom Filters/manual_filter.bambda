@@ -1,0 +1,12 @@
+// A custom filter Bambda that displays a confirmation dialog box for every single request/response in the current results table, putting the power BACK into your hands.
+// Requests/responses will only be included in the results if you manually approve them (by clicking the "Yes" option).
+// DOWN with AUTOMATION. MAKE BAMBDAS MANUAL AGAIN!
+
+Object jOptionPane = Class.forName("javax.swing.JOptionPane").newInstance();
+int yesNoOption = jOptionPane.getClass().getDeclaredField("YES_NO_OPTION").getInt(jOptionPane);
+int yesOption = jOptionPane.getClass().getDeclaredField("YES_OPTION").getInt(jOptionPane);
+int decision = (int) (jOptionPane.getClass().getMethod("showConfirmDialog", Class.forName("java.awt.Component"), Object.class, String.class, int.class)).invoke(jOptionPane, null, "Do you wish to include the following request/response in the filtered results:\n\n[" + requestResponse.request().method() + "] " + requestResponse.request().url() + "\n\nStatus: " + requestResponse.response().statusCode() + ", Length: " + requestResponse.response().toByteArray().length(), "Filter", yesNoOption);
+if (decision == yesOption) {
+    return true;
+}
+return false;
