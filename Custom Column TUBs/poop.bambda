@@ -1,0 +1,10 @@
+// A custom column Bambda that displays 1-5 poop emojis (as determined by a random number generator).
+// Suggested column header: Poop
+// Note: The random number generator is not SECURE. Do not rely on the number of poop emojis in any cryptographic operation.
+
+int num = new Random().nextInt(1, 6);
+StringBuilder sb = new StringBuilder();
+for (int i = 0; i < num; i++) {
+	sb.append("💩");
+}
+return sb.toString();
