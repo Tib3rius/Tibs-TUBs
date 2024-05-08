@@ -1,0 +1,6 @@
+// A custom column Bambda that adds a random image of a cat.
+// Suggested column header: Cat!
+// Note: This uses an external cat image API. Every single row will cause a new request to be sent. Don't use this. :P
+
+java.awt.image.BufferedImage image = javax.imageio.ImageIO.read(new java.net.URL("https://cataas.com/cat"));
+return new javax.swing.ImageIcon(image.getScaledInstance(30, 30, java.awt.Image.SCALE_FAST));
