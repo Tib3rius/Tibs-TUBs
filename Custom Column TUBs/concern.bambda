@@ -1,0 +1,25 @@
+// A custom column Bambda that displays how concerning a response is.
+// Suggested column header: Concern-o-meter
+
+String str = requestResponse.hasResponse() ? requestResponse.response().bodyToString() : "";
+
+int count = 0;
+for (int i = 0; i < str.length(); i++) {
+	if (str.charAt(i) == '?') {
+		count++;
+	}
+}
+
+if (count == 0) {
+	return "Cool";
+}
+
+if (count < 5) {
+	return "Calm";
+}
+
+if (count < 10) {
+	return "Concern";
+}
+
+return "Panic!";
