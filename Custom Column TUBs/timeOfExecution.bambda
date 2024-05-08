@@ -1,0 +1,2 @@
+// Custom column that displays the time/date at which the bambda was executed
+return LocalDateTime.now();
