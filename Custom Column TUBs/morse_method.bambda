@@ -1,7 +1,7 @@
 // A custom column Bambda that displays the HTTP method in Morse code.
 // Suggested column header: Morse Method
 
-String morseCode [] = {".- ", "-... ", "-.-. ", "-.. ", ". ", "..-. ", "--. ", ".... ", ".. ", ".--- ", "-.- ", ".-.. ", "-- ", "-. ", "--- ", ".--. ", "--.- ", ".-. ", "... ", "- ", "..- ", "...- ", ".-- ", "-..- ", "-.-- ", "--.. "};
+String morseCode [] = {".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."};
 char[] method = requestResponse.request().method().toUpperCase().toCharArray();
 StringBuilder sb = new StringBuilder();
 for (int i = 0; i < method.length; i++) {
@@ -11,6 +11,6 @@ for (int i = 0; i < method.length; i++) {
     } else {
         sb.append(method[i]);
     }
-    sb.append(" ");
+    sb.append("  ");
 }
 return sb.toString().trim();
