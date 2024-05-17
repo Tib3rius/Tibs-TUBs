@@ -1,0 +1,6 @@
+// A custom filter Bambda that flips a secure virtual coin to determine whether a request/response is displayed.
+
+if (new java.security.SecureRandom().nextBoolean()) {
+	return true;
+}
+return false;
