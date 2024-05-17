@@ -1,0 +1,11 @@
+java.util.Random random = new java.util.Random();
+
+HighlightColor[] colors = HighlightColor.values();
+HighlightColor randomColor;
+
+do {
+    randomColor = colors[random.nextInt(colors.length)];
+} while (randomColor == HighlightColor.NONE);
+
+requestResponse.annotations().setHighlightColor(randomColor);
+return true;
