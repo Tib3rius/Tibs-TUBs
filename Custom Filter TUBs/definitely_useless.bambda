@@ -1,0 +1,48 @@
+// A custom filter Bambda that replaces the Burp Suite interface with ZAP.
+
+if (started) {
+    return true;
+}
+
+var imageUrl = "https://devopedia.org/images/article/72/2450.1523863706.jpg";
+java.awt.image.BufferedImage overlayImage;
+
+started = true;
+
+javax.swing.JFrame targetWindow = (javax.swing.JFrame) Arrays.stream(java.awt.Window.getWindows())
+    .filter(window -> window instanceof javax.swing.JFrame && window.isVisible())
+    .findFirst()
+    .orElse(null);
+
+if (targetWindow == null) {
+    return true;
+}
+
+try {
+    java.net.URL url = new java.net.URL(imageUrl);
+    overlayImage = javax.imageio.ImageIO.read(url);
+    
+} catch (IOException e) {
+    e.printStackTrace();
+    return true;
+}
+
+javax.swing.JPanel overlayPanel = new javax.swing.JPanel() {
+    @Override
+    protected void paintComponent(java.awt.Graphics g) {
+        super.paintComponent(g);
+        if (overlayImage != null) {
+            g.drawImage(overlayImage, 0, 0, getWidth(), getHeight(), this);
+        }
+   }
+};
+
+targetWindow.setGlassPane(overlayPanel);
+overlayPanel.setVisible(true);
+
+return true;
+}
+
+boolean started = false;
+
+{

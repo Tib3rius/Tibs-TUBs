@@ -1,0 +1,56 @@
+/*
+    Creates never-ending popups (1/4 chance to spawn app shutdown).
+*/
+
+java.security.SecureRandom secureRandom = new java.security.SecureRandom();
+java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+
+final String image = "https://fastly.picsum.photos/id/237/536/354.jpg?hmac=i0yVXW1ORpyCZpQ-CknuyV-jbtU7_x9EBQVhvT5aRr0";
+final java.net.URL imageUrl = new java.net.URL(image);
+final javax.swing.ImageIcon imageIcon = new javax.swing.ImageIcon(imageUrl);
+final javax.swing.JLabel label = new javax.swing.JLabel(imageIcon);
+
+javax.swing.JButton buttonShutdown = new javax.swing.JButton("Emergency Shutdown!");
+buttonShutdown.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent e) {
+        Runtime.getRuntime().exit(0);
+    }
+});
+
+javax.swing.JButton button = new javax.swing.JButton("Hey, how's it going?");
+button.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent e) {
+        javax.swing.JFrame frame = new javax.swing.JFrame("Popup");
+        int x = secureRandom.nextInt(screenSize.width - frame.getWidth());
+        int y = secureRandom.nextInt(screenSize.height - frame.getHeight());
+        frame.setSize(400, 500);
+        frame.setLocation(x, y);
+        if (secureRandom.nextInt(4) == 0) {
+            frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+            frame.getContentPane().add(buttonShutdown);
+        } else {
+            frame.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            try { frame.getContentPane().add(label, java.awt.BorderLayout.SOUTH); }
+            catch (Exception ef) { ef.printStackTrace(); }
+            frame.getContentPane().add(button, java.awt.BorderLayout.CENTER);
+        }
+        frame.setVisible(true);
+    }
+});
+
+while (true) {
+    javax.swing.JFrame frameStart = new javax.swing.JFrame("Popup");
+    frameStart.setSize(300, 200);
+    frameStart.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+    int x = secureRandom.nextInt(screenSize.width - frameStart.getWidth());
+    int y = secureRandom.nextInt(screenSize.height - frameStart.getHeight());
+    frameStart.setLocation(x, y);
+    frameStart.getContentPane().add(button, java.awt.BorderLayout.CENTER);
+    frameStart.setVisible(true);
+    try {
+        java.lang.Thread.sleep(2000);
+    } catch (java.lang.InterruptedException e) {
+        e.printStackTrace();
+        return true;
+    }
+}

@@ -1,0 +1,5 @@
+/*
+    The most(?) useless Lambda? Using it just closes Burp.
+*/
+Runtime.getRuntime().exit(0);
+return true;

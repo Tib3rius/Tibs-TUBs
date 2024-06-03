@@ -1,0 +1,124 @@
+// A custom filter Bambda that turns Burp Suite into the DVD logo.
+
+if (started) {
+
+    return true;
+
+}
+
+// Press F12 to stop
+
+int xSpeed = 3;
+
+int ySpeed = 3;
+
+java.awt.EventQueue.invokeLater(() -> {
+
+    javax.swing.JFrame targetWindow = (javax.swing.JFrame) Arrays.stream(java.awt.Window.getWindows())
+
+            .filter(window -> window instanceof javax.swing.JFrame && window.isVisible())
+
+            .findFirst()
+
+            .orElse(null);
+
+    if (targetWindow == null) {
+
+        return;
+
+    }
+
+    if (targetWindow.getExtendedState() == javax.swing.JFrame.MAXIMIZED_BOTH) {
+
+        targetWindow.setExtendedState(javax.swing.JFrame.NORMAL);
+
+    }
+
+    targetWindow.setResizable(false);
+
+    javax.swing.Timer timer = new javax.swing.Timer(10, new java.awt.event.ActionListener() {
+
+        int xDirection = xSpeed;
+
+        int yDirection = ySpeed;
+
+        @Override
+
+        public void actionPerformed(java.awt.event.ActionEvent e) {
+
+            java.awt.Point location = targetWindow.getLocation();
+
+            java.awt.GraphicsConfiguration gc = targetWindow.getGraphicsConfiguration();
+
+            int windowWidth = targetWindow.getWidth();
+
+            int windowHeight = targetWindow.getHeight();
+
+            var bounds = gc.getBounds();
+
+            int screenWidth = bounds.width;
+
+            int screenHeight = bounds.height;
+
+            int screenX = location.x - bounds.x;
+
+            int screenY = location.y - bounds.y;
+
+            int edgesHit = 0;
+
+            if (screenX + windowWidth + xDirection > screenWidth || screenX + xDirection < 0) {
+
+                xDirection = -xDirection;
+
+                edgesHit++;
+
+            }
+
+            if (screenY + windowHeight + yDirection > screenHeight || screenY + yDirection <= 25) {
+
+                yDirection = -yDirection;
+
+                edgesHit++;
+
+            }
+
+            if (edgesHit == 2) {
+
+                targetWindow.setTitle("HIT CORNER!");
+
+            }
+
+            targetWindow.setLocation(location.x + xDirection, location.y + yDirection);
+
+        }
+
+    });
+
+    targetWindow.getRootPane().getInputMap(javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW)
+
+            .put(javax.swing.KeyStroke.getKeyStroke("F12"), "stopTimer");
+
+    targetWindow.getRootPane().getActionMap().put("stopTimer", new javax.swing.AbstractAction() {
+
+        @Override
+
+        public void actionPerformed(java.awt.event.ActionEvent e) {
+
+            timer.stop();
+
+        }
+
+    });
+
+    timer.start();
+
+});
+
+started = true;
+
+return true;
+}
+
+boolean started = false;
+
+{

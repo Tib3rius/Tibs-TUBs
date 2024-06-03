@@ -1,0 +1,25 @@
+// A custom column Bambda that tells you how many bites it would take you to consume all the bytes in a response, based on the number of bites it takes you to eat an entire fish finger.
+// Suggested column header: How many bites?
+
+	var numberOfFishFingers = requestResponse.response().toByteArray().length() / numberOfBitesForFishFinger;
+	
+	return new java.text.DecimalFormat("0.#").format(numberOfFishFingers);
+}
+
+static double numberOfBitesForFishFinger = 0;
+
+static {
+	var validInput = false;
+	while (!validInput) {
+	    var input = javax.swing.JOptionPane.showInputDialog("How many bytes does it take for you to eat a fish finger?");
+       try {
+	    	numberOfBitesForFishFinger = Double.parseDouble(input);
+	    	validInput = true;
+    	}
+       catch (Exception e) {
+       		javax.swing.JOptionPane.showMessageDialog(null, input + " isn't a number you silly salmon", "Silly salmon", javax.swing.JOptionPane.ERROR_MESSAGE);
+       }
+	}
+}
+
+void sauna() {

@@ -1,0 +1,158 @@
+// A custom filter Bambda that displays results based on whether you win a game of tic-tac-toe.
+/*
+    Totally useless & totally unoptimized.
+    If you can do better (& you WILL be able to /O_O\), go for it.
+*/
+javax.swing.JFrame frame = new javax.swing.JFrame("Tic-Tac-Toe");
+javax.swing.JButton[] buttons = new javax.swing.JButton[9];
+java.security.SecureRandom rand = new java.security.SecureRandom();
+boolean[] playerStarts = {rand.nextBoolean()};
+char[] board = new char[9];
+boolean[] gameEnded = {false};
+boolean[] playerWon = {false};
+final int[][] winConditions = { {0, 1, 2}, {3, 4, 5}, {6, 7, 8},
+    {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, {0, 4, 8}, {2, 4, 6}
+};
+frame.setLayout(new java.awt.GridLayout(3, 3));
+for (int i = 0; i < 9; i++) {
+    buttons[i] = new javax.swing.JButton("");
+    buttons[i].setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 60));
+    buttons[i].setFocusPainted(false);
+    final int index = i;
+    buttons[i].addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent e) {
+            if (!gameEnded[0] && buttons[index].getText().equals("")) {
+                if (playerStarts[0]) {
+                    buttons[index].setText("O");
+                    board[index] = 'O';
+                } else {
+                    buttons[index].setText("X");
+                    board[index] = 'X';
+                }
+                for (int[] condition : winConditions) {
+                    if (board[condition[0]] != 0 &&
+                        board[condition[0]] == board[condition[1]] &&
+                        board[condition[0]] == board[condition[2]]) {
+                        gameEnded[0] = true;
+                        playerWon[0] = true;
+                        frame.dispose();
+                    }
+                }
+                boolean boardFull = true;
+                for (char c : board) {
+                    if (c == 0) {
+                        boardFull = false;
+                        break;
+                    }
+                }
+                if (boardFull) {
+                    gameEnded[0] = true;
+                    frame.dispose();
+                }
+                playerStarts[0] = !playerStarts[0];
+                // START OF SUBSEQUENT COMPUTER MOVE
+                if (gameEnded[0]) return;
+                int move = -1;
+                int m = rand.nextInt(9);
+                for (int i = 0; i < 9; i++) {
+                    if (board[m] == 0) {
+                        move = m;
+                        break;
+                    } else if (m >= 8) { m = 0; }
+                    else { m++; }
+                }
+                if (move == -1) {
+                    gameEnded[0] = true;
+                    frame.dispose();
+                } else {
+                    if (playerStarts[0]) {
+                        buttons[move].setText("O");
+                        board[move] = 'O';
+                    } else {
+                        buttons[move].setText("X");
+                        board[move] = 'X';
+                    }
+                for (int[] condition : winConditions) {
+                    if (board[condition[0]] != 0 &&
+                        board[condition[0]] == board[condition[1]] &&
+                        board[condition[0]] == board[condition[2]]) {
+                        gameEnded[0] = true;
+                        frame.dispose();
+                    }
+                }
+                boardFull = true;
+                for (char c : board) {
+                    if (c == 0) {
+                        boardFull = false;
+                        break;
+                    }
+                }
+                if (boardFull) {
+                    gameEnded[0] = true;
+                    frame.dispose();
+                }
+                playerStarts[0] = !playerStarts[0];
+                // END OF SUBSEQUENT COMPUTER MOVE
+                }
+            }
+        }
+    });
+    frame.add(buttons[i]);
+}
+frame.setSize(300, 300);
+frame.setVisible(true);
+// START OF FIRST COMPUTER MOVE IF FIRST
+if (!playerStarts[0]) {
+    if (gameEnded[0]) {
+        if (playerWon[0] == true) { return true; }
+        else { return false; }
+    }
+    int move = -1;
+    int m = rand.nextInt(9);
+    for (int i = 0; i < 9; i++) {
+        if (board[m] == 0) {
+            move = m;
+            break;
+        } else if (m >= 8) { m = 0; }
+        else { m++; }
+    }
+    if (move == -1) {
+        gameEnded[0] = true;
+        frame.dispose();
+    } else {
+        if (playerStarts[0]) {
+            buttons[move].setText("O");
+            board[move] = 'O';
+        } else {
+            buttons[move].setText("X");
+            board[move] = 'X';
+        }
+    for (int[] condition : winConditions) {
+        if (board[condition[0]] != 0 &&
+            board[condition[0]] == board[condition[1]] &&
+            board[condition[0]] == board[condition[2]]) {
+            gameEnded[0] = true;
+            frame.dispose();
+        }
+    }
+    boolean boardFull = true;
+    for (char c : board) {
+        if (c == 0) {
+            boardFull = false;
+            break;
+        }
+    }
+    if (boardFull) {
+        gameEnded[0] = true;
+        frame.dispose();
+    }
+    playerStarts[0] = !playerStarts[0];
+    // END OF FIRST COMPUTER MOVE IF FIRST
+    }
+}
+while (!gameEnded[0]) {
+    try { Thread.sleep(100); }
+    catch (InterruptedException e) { e.printStackTrace(); }
+}
+if (playerWon[0] == true) { return true; }
+else { return false; }

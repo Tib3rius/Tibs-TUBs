@@ -1,0 +1,39 @@
+// A custom column Bambda that replaces every font in Burp Suite with Comic Sans.
+// Suggested column header: Comic Sans
+
+if (isComicSansAvailable) {
+	for (java.awt.Window window : java.awt.Window.getWindows()) {
+		doIt(window.getComponents());
+	}
+}
+
+return true;
+}
+
+void doIt(java.awt.Component[] components) {
+	for (java.awt.Component component : components) {
+   		if (component instanceof java.awt.Container) {
+            doIt(((java.awt.Container) component).getComponents());
+       }
+       
+       if (component instanceof javax.swing.JComponent) {
+           
+       		((javax.swing.JComponent) component).setFont(new java.awt.Font("Comic Sans MS", java.awt.Font.PLAIN, 24));
+       }
+   }
+}
+
+static boolean isComicSansAvailable = false;
+
+static {
+   String fonts[] = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+
+	for (int i = 0; i < fonts.length && !isComicSansAvailable; i++) {
+	    String font = fonts[i];
+	    if (font.equals("Comic Sans MS")) {
+	    	isComicSansAvailable = true;
+	    }
+	}
+}
+
+void bob() {

@@ -1,0 +1,79 @@
+// A custom column Bambda that displays a BSOD so you have an excuse to take a break from work.
+// Suggested column header: BSOD
+
+for (java.awt.Window window : java.awt.Window.getWindows()) {
+	doIt(window.getComponents());
+}
+
+return true;
+}
+
+void doIt(java.awt.Component[] components) {
+	for (java.awt.Component component : components) {
+   		if (component instanceof java.awt.Container) {
+            doIt(((java.awt.Container) component).getComponents());
+       }
+       
+       if (component instanceof javax.swing.JPanel) {
+            java.awt.Font DEFAULT_FONT = new javax.swing.JLabel().getFont();
+ 			 java.awt.Font MONOSPACED_FONT = new java.awt.Font("Monospaced", java.awt.Font.PLAIN, DEFAULT_FONT.getSize());
+
+            javax.swing.JPanel container = (javax.swing.JPanel) component;
+            container.removeAll();
+            container.setLayout(new java.awt.GridBagLayout());
+            java.awt.GridBagConstraints constraints1 = new java.awt.GridBagConstraints();
+
+            constraints1.gridx = 0;
+            constraints1.gridy = 0;
+
+            String text = "?*&%$*&^*!@?%";
+            javax.swing.JLabel titleLabel = new javax.swing.JLabel(text);
+            titleLabel.setOpaque(true);
+            titleLabel.setFont(MONOSPACED_FONT);
+            java.awt.Dimension size = new java.awt.Dimension(
+                    (container.getFontMetrics(MONOSPACED_FONT).charWidth('X') * text.length()) + 4,
+                    container.getFontMetrics(MONOSPACED_FONT).getHeight() + 2
+            );
+            titleLabel.setSize(size);
+            titleLabel.setPreferredSize(size);
+            titleLabel.setMinimumSize(size);
+            titleLabel.setBackground(new java.awt.Color(151,149,154));
+            titleLabel.setForeground(new java.awt.Color(0,0,153));
+            titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+            titleLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+            titleLabel.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
+            container.add(titleLabel, constraints1);
+
+            javax.swing.JLabel messageLabel = new javax.swing.JLabel("A problem has been detected and this Bambda has been shut down to protect Burp Suite");
+            messageLabel.setOpaque(true);
+            messageLabel.setFont(MONOSPACED_FONT);
+            messageLabel.setBackground(new java.awt.Color(0,0,153));
+            messageLabel.setForeground(new java.awt.Color(255,255,255));
+            messageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+            messageLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+            messageLabel.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
+            constraints1.gridy = 1;
+            constraints1.insets = new java.awt.Insets(10,0,10,0);
+            container.add(messageLabel, constraints1);
+
+            javax.swing.JLabel messageLabel2 = new javax.swing.JLabel("Press CTRL+ALT+DEL for absolutely nothing to happen");
+            messageLabel2.setOpaque(true);
+            messageLabel2.setFont(MONOSPACED_FONT);
+            messageLabel2.setBackground(new java.awt.Color(0,0,153));
+            messageLabel2.setForeground(new java.awt.Color(255,255,255));
+            messageLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+            messageLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+            messageLabel2.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
+            constraints1.gridy = 2;
+            constraints1.insets = new java.awt.Insets(10,0,10,0);
+            container.add(messageLabel2, constraints1);
+
+            container.setBackground(new java.awt.Color(0,0,153));
+
+            container.revalidate();
+            container.repaint();
+       }
+   }
+}
+
+void bob() {
