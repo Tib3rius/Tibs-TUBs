@@ -1,0 +1,8 @@
+// A custom column Bambda that displays an answer stright from the Magic-8-ball.
+// Really helpful to identify new attack vectors, boost your stamina and courage.
+
+String[] Answers = new String[]{"It is certain", "It is decidedly so", "Without a doubt", "Yes definitely", "You may rely on it", "As I see it", "Yes", "Most likely", "Outlook good", "Yes", "Signs point to yes", "Ask again later", "Better not tell you now", "Without a doubt", "Cannot predict now", "Concentrate and ask again", "Don't count on it", "My reply is no", "My sources say no", "Outlook not so good", "Very doubtful"};
+java.util.zip.CRC32 requestCrc32 = new java.util.zip.CRC32();
+requestCrc32.update(requestResponse.request().toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));
+
+return "🎱 " + Answers[Math.abs((int)requestCrc32.getValue())%Answers.length];
